@@ -34,12 +34,14 @@ class _HomeScreenState extends State<HomeScreen> {
         color: EventCheckinColors.primary,
         child: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
-              .collection('event')
+              .collection('events')
               .orderBy("dateDebut")
-              .where("dateDebut",
-                  isGreaterThan: DateTime.now().add(
-                    const Duration(hours: -3),
-                  ))
+              .where(
+                "dateDebut",
+                isGreaterThan: DateTime.now().add(
+                  const Duration(hours: -3),
+                ),
+              )
               .snapshots(),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -48,7 +50,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: CircularProgressIndicator(),
               );
             }
-            // return Container();
             return ListView.builder(
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (context, index) {
@@ -59,15 +60,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     subtitle: Text(document.get('type')),
                     trailing:
                         Text(document.get('dateDebut').toDate().toString()),
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => EventScreen(
-                                event: document,
-                              ),
-                            ),
-                          );
-                        },
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return EventScreen(
+                              event: document,
+                            );
+                          },
+                        ),
+                      );
+                    },
                   ),
                 );
               },

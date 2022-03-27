@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:event_checkin/ui/screens/add_event_screen.dart';
-import 'package:event_checkin/utils/event_checkin_colors.dart';
+import 'package:event_checkin/ui/views/event_details_view.dart';
+import 'package:event_checkin/ui/views/scan_code_view.dart';
 import 'package:flutter/material.dart';
 
 class EventScreen extends StatefulWidget {
@@ -37,19 +37,21 @@ class _EventScreenState extends State<EventScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.event.get('type').toString().toUpperCase()),
+        title: Text(
+          widget.event.get('name').toString().toUpperCase(),
+        ),
       ),
       body: Center(
         child: PageView(
           onPageChanged: (index) {
+            // print(widget.event.data().toString());
             setState(() {
               _currentPage = index;
             });
           },
           controller: _pageController,
           children: <Widget>[
-            _buildEventDetails(context),
-            _buildEventParticipants(context),
+            EventDetailsView(eventID: widget.event.id),
           ],
         ),
       ),
@@ -78,92 +80,89 @@ class _EventScreenState extends State<EventScreen> {
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => const AddEventScreen(),
+              builder: (context) => ScanCodeView(
+                eventID: widget.event.id,
+              ),
             ),
           );
         },
-        child: const Icon(Icons.add),
+        child: const Icon(
+          Icons.qr_code_2_rounded,
+        ),
       ),
     );
   }
 
-  _buildEventDetails(BuildContext context) {
-    return Container(
-      color: EventCheckinColors.primary,
-      child: Column(
-        children: <Widget>[
-          Expanded(
-            child: ListView(
-              children: <Widget>[
-                ListTile(
-                  title: Text(widget.event.get('name')),
-                  subtitle: Text(widget.event.get('type')),
-                  trailing: Text(widget.event.get('dateDebut').toDate().toString()),
-                ),
-                ListTile(
-                  title: const Text('Description'),
-                  subtitle: Text(widget.event.get('description')),
-                ),
-                ListTile(
-                  title: const Text('Lieu'),
-                  subtitle: Text(widget.event.get('lieu')),
-                ),
-                ListTile(
-                  title: const Text('Nombre de places'),
-                  subtitle: Text(widget.event.get('nbPlaces').toString()),
-                ),
-                ListTile(
-                  title: const Text('Nombre de participants'),
-                  subtitle: Text(widget.event.get('nbParticipants').toString()),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // _buildEventDetails(BuildContext context) {
+  //   return ListView(
+  //     children: <Widget>[
+  //       ListTile(
+  //         title: Text(widget.event.get('name')),
+  //         subtitle: Text(widget.event.get('type')),
+  //         trailing: Text(widget.event.get('dateDebut').toDate().toString()),
+  //       ),
+  //       ListTile(
+  //         title: const Text('Description'),
+  //         subtitle: Text(widget.event.get('description')),
+  //       ),
+  //       ListTile(
+  //         title: const Text('Lieu'),
+  //         subtitle: Text(widget.event.get('lieu')),
+  //       ),
+  //       ListTile(
+  //         title: const Text('Nombre de places'),
+  //         subtitle: Text(widget.event.get('nbPlaces').toString()),
+  //       ),
+  //       ListTile(
+  //         title: const Text('Nombre de participants'),
+  //         subtitle: Text(widget.event.get('nbParticipants').toString()),
+  //       ),
+  //     ],
+  //   );
+  // }
 
-  _buildEventParticipants(BuildContext context) {
-    return Container(
-      color: EventCheckinColors.primary,
-      child: Column(
-        children: <Widget>[
-          Expanded(
-            child: ListView(
-              children: <Widget>[
-                const ListTile(
-                  title: Text('Participants'),
-                ),
-                StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance
-                      .collection('event')
-                      .doc(widget.event.id)
-                      .collection('participants')
-                      .snapshots(),
-                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (!snapshot.hasData) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                    return ListView.builder(
-                      itemCount: snapshot.data!.docs.length,
-                      itemBuilder: (context, index) {
-                        final DocumentSnapshot document = snapshot.data!.docs[index];
-                        return ListTile(
-                          title: Text(document.get('name')),
-                          subtitle: Text(document.get('email')),
-                        );
-                      },
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // _buildEventParticipants(BuildContext context) {
+  //   return Container(
+  //     color: EventCheckinColors.primary,
+  //     child: Column(
+  //       children: <Widget>[
+  //         Expanded(
+  //           child: ListView(
+  //             children: <Widget>[
+  //               const ListTile(
+  //                 title: Text('Participants'),
+  //               ),
+  //               StreamBuilder<QuerySnapshot>(
+  //                 stream: FirebaseFirestore.instance
+  //                     .collection('event')
+  //                     .doc(widget.event.id)
+  //                     .collection('participants')
+  //                     .snapshots(),
+  //                 builder: (BuildContext context,
+  //                     AsyncSnapshot<QuerySnapshot> snapshot) {
+  //                   if (!snapshot.hasData) {
+  //                     return const Center(
+  //                       child: CircularProgressIndicator(),
+  //                     );
+  //                   }
+  //                   return ListView.builder(
+  //                     itemCount: snapshot.data!.docs.length,
+  //                     itemBuilder: (context, index) {
+  //                       final DocumentSnapshot document =
+  //                           snapshot.data!.docs[index];
+  //                       return ListTile(
+  //                         title: Text(document.get('name')),
+  //                         subtitle: Text(document.get('email')),
+  //                       );
+  //                     },
+  //                   );
+  //                 },
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }
