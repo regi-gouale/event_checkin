@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:event_checkin/ui/views/event_attendees_view.dart';
 import 'package:event_checkin/ui/views/event_details_view.dart';
 import 'package:event_checkin/ui/views/scan_code_view.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,6 @@ class _EventScreenState extends State<EventScreen> {
     super.initState();
     _pageController = PageController(
       initialPage: _currentPage,
-      // keepPage: true,
     );
   }
 
@@ -44,7 +44,6 @@ class _EventScreenState extends State<EventScreen> {
       body: Center(
         child: PageView(
           onPageChanged: (index) {
-            // print(widget.event.data().toString());
             setState(() {
               _currentPage = index;
             });
@@ -52,6 +51,7 @@ class _EventScreenState extends State<EventScreen> {
           controller: _pageController,
           children: <Widget>[
             EventDetailsView(eventID: widget.event.id),
+            EventAttendeesView(eventID: widget.event.id),
           ],
         ),
       ),
@@ -92,77 +92,4 @@ class _EventScreenState extends State<EventScreen> {
       ),
     );
   }
-
-  // _buildEventDetails(BuildContext context) {
-  //   return ListView(
-  //     children: <Widget>[
-  //       ListTile(
-  //         title: Text(widget.event.get('name')),
-  //         subtitle: Text(widget.event.get('type')),
-  //         trailing: Text(widget.event.get('dateDebut').toDate().toString()),
-  //       ),
-  //       ListTile(
-  //         title: const Text('Description'),
-  //         subtitle: Text(widget.event.get('description')),
-  //       ),
-  //       ListTile(
-  //         title: const Text('Lieu'),
-  //         subtitle: Text(widget.event.get('lieu')),
-  //       ),
-  //       ListTile(
-  //         title: const Text('Nombre de places'),
-  //         subtitle: Text(widget.event.get('nbPlaces').toString()),
-  //       ),
-  //       ListTile(
-  //         title: const Text('Nombre de participants'),
-  //         subtitle: Text(widget.event.get('nbParticipants').toString()),
-  //       ),
-  //     ],
-  //   );
-  // }
-
-  // _buildEventParticipants(BuildContext context) {
-  //   return Container(
-  //     color: EventCheckinColors.primary,
-  //     child: Column(
-  //       children: <Widget>[
-  //         Expanded(
-  //           child: ListView(
-  //             children: <Widget>[
-  //               const ListTile(
-  //                 title: Text('Participants'),
-  //               ),
-  //               StreamBuilder<QuerySnapshot>(
-  //                 stream: FirebaseFirestore.instance
-  //                     .collection('event')
-  //                     .doc(widget.event.id)
-  //                     .collection('participants')
-  //                     .snapshots(),
-  //                 builder: (BuildContext context,
-  //                     AsyncSnapshot<QuerySnapshot> snapshot) {
-  //                   if (!snapshot.hasData) {
-  //                     return const Center(
-  //                       child: CircularProgressIndicator(),
-  //                     );
-  //                   }
-  //                   return ListView.builder(
-  //                     itemCount: snapshot.data!.docs.length,
-  //                     itemBuilder: (context, index) {
-  //                       final DocumentSnapshot document =
-  //                           snapshot.data!.docs[index];
-  //                       return ListTile(
-  //                         title: Text(document.get('name')),
-  //                         subtitle: Text(document.get('email')),
-  //                       );
-  //                     },
-  //                   );
-  //                 },
-  //               ),
-  //             ],
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 }

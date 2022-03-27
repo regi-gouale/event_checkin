@@ -66,24 +66,31 @@ class _EventDetailsViewState extends State<EventDetailsView> {
                   textAlign: TextAlign.center,
                 ),
               ),
-              SingleChildScrollView(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: event!.get('participants')!.length,
-                  itemBuilder: (context, index) {
-                    final Map<String, dynamic> participant =
-                        event!.get('participants')![index];
-                    // print(participant.data());
-                    return Card(
-                      child: ListTile(
-                        title: Text(
-                            "${participant['firstName'].toString()} ${participant['lastName'].toString()}"),
-                        subtitle: Text(participant['email'].toString()),
-                      ),
+              StreamBuilder(
+                builder: (
+                  BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot,
+                ) {
+                  if (!snapshot.hasData) {
+                    return const Center(
+                      child: Text("Pas de participants"),
                     );
-                  },
-                ),
+                  }
+                  return Center(
+                    child: Text(
+                      '${snapshot.data!.docs.length} participant${snapshot.data!.docs.length > 1 ? 's' : ''}',
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                  );
+                },
+                stream: FirebaseFirestore.instance
+                    .collection("events")
+                    .doc(widget.eventID)
+                    .collection("attendees")
+                    .snapshots(),
               ),
             ],
           );
