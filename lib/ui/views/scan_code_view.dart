@@ -85,7 +85,7 @@ class _ScanCodeViewState extends State<ScanCodeView> {
     setState(() {
       controller = ctrl;
     });
-    controller.scannedDataStream.listen((data) async{
+    controller.scannedDataStream.listen((data) async {
       setState(() {
         qrCodeResult = data;
       });
@@ -103,23 +103,6 @@ class _ScanCodeViewState extends State<ScanCodeView> {
     QRViewController ctrl,
     bool permission,
   ) {
-    // if (permission) {
-    //   controller = ctrl;
-    //   controller.scannedDataStream.listen(_onQRViewScanned);
-    // } else {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     SnackBar(
-    //       content: const Text('Camera permission denied'),
-    //       action: SnackBarAction(
-    //         label: 'Ok',
-    //         onPressed: () {
-    //           controller.resumeCamera();
-    //         },
-    //       ),
-    //     ),
-    //   );
-    // }
-
     if (!permission) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -136,6 +119,7 @@ class _ScanCodeViewState extends State<ScanCodeView> {
   }
 
   Widget _colorCameraInterface(Barcode barcode) {
+    String name = "";
     setState(() {
       qrColor = Colors.red;
     });
@@ -148,7 +132,6 @@ class _ScanCodeViewState extends State<ScanCodeView> {
           .get()
           .then((person) {
         if (person.exists) {
-          print(person.data());
           FirebaseFirestore.instance
               .collection("events")
               .doc(widget.eventID)
@@ -162,8 +145,12 @@ class _ScanCodeViewState extends State<ScanCodeView> {
             "birthYear": person.data()!["birthYear"],
             "gender": person.data()!["gender"],
           });
-        } else {
-          print("No such document!");
+
+          setState(() {
+            qrColor = Colors.green;
+            name =
+                "${person.data()!['firstName']} ${person.data()!['lastName']}";
+          });
         }
       });
     }
@@ -172,24 +159,21 @@ class _ScanCodeViewState extends State<ScanCodeView> {
       color: qrColor,
       child: SingleChildScrollView(
         child: Center(
-          child: Column(
-            children: [
-              Text(
-                'format: ${barcode.format.toString()}',
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+          child: name != ""
+              ? Text(
+                  "Bienvenue : $name !",
+                  style: const TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+              : const Text(
+                  "Scan a QR code",
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              Text(
-                'code: ${barcode.code ?? ""}',
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );
