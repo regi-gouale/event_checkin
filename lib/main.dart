@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_checkin/firebase_options.dart';
-import 'package:event_checkin/ui/screens/home_screen.dart';
+import 'package:event_checkin/ui/screens/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +36,8 @@ class EventCheckin extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      home: const HomeScreen(),
+      // home: const HomeScreen(),
+      home: const LoginScreen(),
     );
   }
 }

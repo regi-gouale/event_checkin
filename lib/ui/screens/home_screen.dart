@@ -27,7 +27,15 @@ class _HomeScreenState extends State<HomeScreen> {
         child: const Icon(Icons.add),
       ),
       appBar: AppBar(
-        title: const Text('Event Check-In'),
+        title: const Text('ICC Lyon Event Check-In'),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.logout,
+            ),
+          ),
+        ],
       ),
       body: Material(
         child: StreamBuilder<QuerySnapshot>(
