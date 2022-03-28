@@ -48,4 +48,4 @@ app.*.map.json
 lib/firebase_options.dart
 lib/generated_plugin_registrant.dart
 .firebaserc
-**.plist
+ios/Runner/Info.plist
