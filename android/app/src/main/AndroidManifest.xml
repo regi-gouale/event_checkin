@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.event_checkin">
    <application
-        android:label="event_checkin"
+        android:label="ICC Lyon - Event Check-in"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_checkin/ui/screens/add_event_screen.dart';
 import 'package:event_checkin/ui/screens/event_screen.dart';
-import 'package:event_checkin/utils/event_checkin_colors.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -31,7 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('Event Check-In'),
       ),
       body: Material(
-        color: EventCheckinColors.primary,
         child: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
               .collection('events')

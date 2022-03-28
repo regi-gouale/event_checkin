@@ -1,6 +1,6 @@
 {
-    "name": "event_checkin",
-    "short_name": "event_checkin",
+    "name": "ICC Lyon - Event Check-in",
+    "short_name": "ICC Lyon - Event Check-in",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
