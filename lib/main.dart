@@ -39,15 +39,4 @@ class EventCheckin extends StatelessWidget {
       home: const HomeScreen(),
     );
   }
-
-  // ThemeData eventCheckinTheme() {
-  //   return ThemeData.light().copyWith(
-  //     colorScheme: ColorScheme.fromSwatch().copyWith(
-  //       primary: EventCheckinColors.primary,
-  //       secondary: EventCheckinColors.secondaryLight,
-  //       background: EventCheckinColors.background,
-  //       error: EventCheckinColors.dangerLight,
-  //     ),
-  //   );
-  // }
 }
