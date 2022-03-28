@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_checkin/ui/screens/add_event_screen.dart';
 import 'package:event_checkin/ui/screens/event_screen.dart';
+import 'package:event_checkin/ui/screens/login_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -27,7 +29,23 @@ class _HomeScreenState extends State<HomeScreen> {
         child: const Icon(Icons.add),
       ),
       appBar: AppBar(
-        title: const Text('Event Check-In'),
+        title: const Text('ICC Lyon Event Check-In'),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LoginScreen(),
+                  ),
+                  (route) => false);
+            },
+            icon: const Icon(
+              Icons.logout,
+            ),
+          ),
+        ],
       ),
       body: Material(
         child: StreamBuilder<QuerySnapshot>(
@@ -71,23 +89,29 @@ class _HomeScreenState extends State<HomeScreen> {
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (context, index) {
                 final DocumentSnapshot document = snapshot.data!.docs[index];
-                return Card(
-                  child: ListTile(
-                    title: Text(document.get('name')),
-                    subtitle: Text(document.get('type')),
-                    trailing:
-                        Text(document.get('startTime').toDate().toString()),
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return EventScreen(
-                              event: document,
-                            );
-                          },
-                        ),
-                      );
-                    },
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: ListTile(
+                      title: Text(document.get('name')),
+                      subtitle: Text(document.get('type')),
+                      trailing:
+                          Text(document.get('startTime').toDate().toString()),
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return EventScreen(
+                                event: document,
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 );
               },

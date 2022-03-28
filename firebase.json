@@ -4,11 +4,35 @@
     "indexes": "firestore.indexes.json"
   },
   "emulators": {
+    "auth": {
+      "port": 9099
+    },
+    "functions": {
+      "port": 5001
+    },
     "firestore": {
-      "port": 8080
+      "port": 8080,
+      "enabled":true
+    },
+    "hosting": {
+      "port": 8012
+    },
+    "storage": {
+      "port": 8888
     },
     "ui": {
       "enabled": true
     }
+  },
+  "hosting": {
+    "public": "web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  },
+  "storage": {
+    "rules": "storage.rules"
   }
 }
