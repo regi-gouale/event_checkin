@@ -1,3 +1,5 @@
+import 'package:event_checkin/ui/screens/home_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -8,8 +10,28 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  late final TextEditingController _emailController;
+  late final TextEditingController _passwordController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _emailController = TextEditingController(
+      text: "jean@dupont.com",
+    );
+    _passwordController = TextEditingController(
+      text: "123456",
+    );
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,8 +100,60 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 width: double.infinity,
                 height: 50.0,
                 child: ElevatedButton(
-                  onPressed: () {
-                    _emailController.text;
+                  onPressed: () async {
+                    try {
+                      UserCredential userCredential = await FirebaseAuth
+                          .instance
+                          .createUserWithEmailAndPassword(
+                        email: _emailController.text,
+                        password: _passwordController.text,
+                      );
+                      if (userCredential.user != null) {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HomeScreen(),
+                          ),
+                          (route) => false,
+                        );
+                      }
+                    } on FirebaseAuthException catch (e) {
+                      if (e.code == 'weak-password') {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'Le mot de passe doit contenir au moins 6 caractères',
+                            ),
+                          ),
+                        );
+                        // print('The password provided is too weak.');
+                      } else if (e.code == 'email-already-in-use') {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'Cette adresse mail est déjà utilisée',
+                            ),
+                          ),
+                        );
+                        // print('The account already exists for that email.');
+                      } else if (e.code == 'invalid-email') {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'L\'adresse mail n\'est pas valide',
+                            ),
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'Une erreur est survenue',
+                            ),
+                          ),
+                        );
+                      }
+                    }
                   },
                   child: const Text("S'enrégistrer"),
                 ),

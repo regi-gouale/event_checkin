@@ -2,7 +2,8 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_checkin/firebase_options.dart';
-import 'package:event_checkin/ui/screens/login_screen.dart';
+import 'package:event_checkin/ui/screens/splash_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ Future<void> main() async {
       host = Platform.isAndroid ? "10.0.2.2" : "localhost";
     }
     FirebaseFirestore.instance.useFirestoreEmulator(host, 8080);
+    await FirebaseAuth.instance.useAuthEmulator(host, 9099);
   }
 
   runApp(const EventCheckin());
@@ -37,7 +39,7 @@ class EventCheckin extends StatelessWidget {
         primarySwatch: Colors.red,
       ),
       // home: const HomeScreen(),
-      home: const LoginScreen(),
+      home: const SplashScreen(),
     );
   }
 }
