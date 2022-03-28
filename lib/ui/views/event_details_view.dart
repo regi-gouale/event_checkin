@@ -48,7 +48,7 @@ class _EventDetailsViewState extends State<EventDetailsView> {
                 ),
               ),
               Text(
-                event!.get('dateDebut').toDate().toString(),
+                event!.get('startTime').toDate().toString(),
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,

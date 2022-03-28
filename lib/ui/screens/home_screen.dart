@@ -35,9 +35,9 @@ class _HomeScreenState extends State<HomeScreen> {
         child: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
               .collection('events')
-              .orderBy("dateDebut")
+              .orderBy("startTime")
               .where(
-                "dateDebut",
+                "startTime",
                 isGreaterThan: DateTime.now().add(
                   const Duration(hours: -3),
                 ),
@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: Text(document.get('name')),
                     subtitle: Text(document.get('type')),
                     trailing:
-                        Text(document.get('dateDebut').toDate().toString()),
+                        Text(document.get('startTime').toDate().toString()),
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
