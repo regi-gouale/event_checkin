@@ -32,6 +32,7 @@ dependencies:
   firebase_core: ^1.13.1
   flutter:
     sdk: flutter
+  flutter_launcher_icons: ^0.9.2
   intl: ^0.17.0
   jsqr: ^0.1.4
   qr_code_scanner: ^0.7.0

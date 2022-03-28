@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_checkin/firebase_options.dart';
 import 'package:event_checkin/ui/screens/home_screen.dart';
-import 'package:event_checkin/utils/event_checkin_colors.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -34,19 +33,21 @@ class EventCheckin extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: eventCheckinTheme(),
+      theme: ThemeData(
+        primarySwatch: Colors.red,
+      ),
       home: const HomeScreen(),
     );
   }
 
-  ThemeData eventCheckinTheme() {
-    return ThemeData.light().copyWith(
-      colorScheme: ColorScheme.fromSwatch().copyWith(
-        primary: EventCheckinColors.primary,
-        secondary: EventCheckinColors.secondaryLight,
-        background: EventCheckinColors.background,
-        error: EventCheckinColors.dangerLight,
-      ),
-    );
-  }
+  // ThemeData eventCheckinTheme() {
+  //   return ThemeData.light().copyWith(
+  //     colorScheme: ColorScheme.fromSwatch().copyWith(
+  //       primary: EventCheckinColors.primary,
+  //       secondary: EventCheckinColors.secondaryLight,
+  //       background: EventCheckinColors.background,
+  //       error: EventCheckinColors.dangerLight,
+  //     ),
+  //   );
+  // }
 }

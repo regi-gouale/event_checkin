@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class EventCheckinColors {
-  static const primary = Color(0xFF00bcd4);
+  static const primary = Colors.red;
   static const secondary = Color(0xffffc107);
   static const success = Color(0xff4caf50);
   static const warning = Color(0xffff9800);
