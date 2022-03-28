@@ -55,6 +55,21 @@ class _EventAttendeesViewState extends State<EventAttendeesView> {
                 BuildContext context,
                 AsyncSnapshot<QuerySnapshot> snapshot,
               ) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.purple,
+                    ),
+                  );
+                }
+                if (snapshot.hasError){
+                  return Center(
+                    child: Text(
+                      'Erreur: ${snapshot.error}',
+                      style: const TextStyle(color: Colors.red),
+                    ),
+                  );
+                }
                 if (!snapshot.hasData) {
                   return const Center(
                     child: Text("Pas de participants"),

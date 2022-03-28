@@ -71,9 +71,32 @@ class _EventDetailsViewState extends State<EventDetailsView> {
                   BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot,
                 ) {
-                  if (!snapshot.hasData) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
-                      child: Text("Pas de participants"),
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.purple,
+                      ),
+                    );
+                  }
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text(
+                        'Erreur: ${snapshot.error}',
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                    );
+                  }
+                  if (!snapshot.hasData) {
+                    return Center(
+                      child: Column(
+                        children: const [
+                          Icon(
+                            Icons.beach_access_rounded,
+                            size: 64,
+                          ),
+                          Text("Pas de participants"),
+                        ],
+                      ),
                     );
                   }
                   return Center(

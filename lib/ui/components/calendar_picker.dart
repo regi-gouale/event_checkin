@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class CalendarPicker extends StatefulWidget {
-  const CalendarPicker({Key? key, required this.controller}) : super(key: key);
+  const CalendarPicker({
+    Key? key,
+    required this.controller,
+    this.dateLabel = 'Heure de début',
+  }) : super(key: key);
 
   final TextEditingController controller;
+  final String dateLabel;
   static String timeFormat = "EEEE, d MMMM, yyyy 'at' h:mm";
 
   static DateTime? stringToDate(String dateString) {
@@ -29,8 +34,6 @@ class CalendarPicker extends StatefulWidget {
 }
 
 class _CalendarPickerState extends State<CalendarPicker> {
-  
-
   Future<void> dateTimePicker() async {
     final DateTime? date = await showDatePicker(
       context: context,
@@ -47,13 +50,12 @@ class _CalendarPickerState extends State<CalendarPicker> {
         final DateTime dateTime =
             DateTime(date.year, date.month, date.day, time.hour, time.minute);
         setState(() {
-          widget.controller.text = DateFormat(CalendarPicker.timeFormat).format(dateTime);
+          widget.controller.text =
+              DateFormat(CalendarPicker.timeFormat).format(dateTime);
         });
       }
     }
   }
-
-  
 
   bool datValidator(String date) {
     return CalendarPicker.stringToDate(date) != null;
@@ -67,7 +69,7 @@ class _CalendarPickerState extends State<CalendarPicker> {
           child: TextFormField(
             controller: widget.controller,
             decoration: InputDecoration(
-              labelText: 'Date et Heure',
+              labelText: widget.dateLabel,
               border: const OutlineInputBorder(),
               prefixIcon: IconButton(
                 icon: const Icon(Icons.calendar_today),

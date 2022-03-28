@@ -95,7 +95,6 @@ class _EditEventFormState extends State<EditEventForm> {
               }
               return null;
             },
-            
           ),
         ),
         Padding(
@@ -139,36 +138,11 @@ class _EditEventFormState extends State<EditEventForm> {
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: CalendarPicker(controller: _endTimeController),
+          child: CalendarPicker(
+            controller: _endTimeController,
+            dateLabel: "Heure de fin",
+          ),
         ),
-        // TextFormField(
-        //   controller: _startTimeController,
-        //   decoration: const InputDecoration(
-        //     labelText: 'Heure de début',
-        //     border: OutlineInputBorder(),
-        //     prefixIcon: Icon(Icons.access_time),
-        //   ),
-        //   validator: (String? value) {
-        //     if (value!.isEmpty) {
-        //       return 'Veuillez entrer une heure de début';
-        //     }
-        //     return null;
-        //   },
-        // ),
-        // TextFormField(
-        //   controller: _endTimeController,
-        //   decoration: const InputDecoration(
-        //     labelText: 'Heure de fin',
-        //     border: OutlineInputBorder(),
-        //     prefixIcon: Icon(Icons.access_time),
-        //   ),
-        //   validator: (String? value) {
-        //     if (value!.isEmpty) {
-        //       return 'Veuillez entrer une heure de fin';
-        //     }
-        //     return null;
-        //   },
-        // ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextFormField(

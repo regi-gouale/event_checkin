@@ -41,11 +41,30 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               )
               .snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          builder: (
+            BuildContext context,
+            AsyncSnapshot<QuerySnapshot> snapshot,
+          ) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.purple,
+                ),
+              );
+            }
             if (!snapshot.hasData) {
               return const Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.yellow,
+                ),
+              );
+            }
+            if (snapshot.hasError) {
+              return Center(
+                child: Text(
+                  'Erreur: ${snapshot.error}',
+                  style: const TextStyle(color: Colors.red),
+                ),
               );
             }
             return ListView.builder(

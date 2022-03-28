@@ -22,6 +22,7 @@ class _ScanCodeViewState extends State<ScanCodeView> {
   late QRViewController controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   Color qrColor = Colors.white;
+  String attendeeName = '';
 
   @override
   void initState() {
@@ -49,7 +50,7 @@ class _ScanCodeViewState extends State<ScanCodeView> {
         children: <Widget>[
           Expanded(
             child: _buildQrView(context),
-            flex: 5,
+            flex: 6,
           ),
           Expanded(
             child: _colorCameraInterface(qrCodeResult),
@@ -106,7 +107,7 @@ class _ScanCodeViewState extends State<ScanCodeView> {
     if (!permission) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text('Camera permission denied'),
+          content: const Text('Accès à la caméra refusé'),
           action: SnackBarAction(
             label: 'Ok',
             onPressed: () {
@@ -119,7 +120,6 @@ class _ScanCodeViewState extends State<ScanCodeView> {
   }
 
   Widget _colorCameraInterface(Barcode barcode) {
-    String name = "";
     setState(() {
       qrColor = Colors.red;
     });
@@ -148,7 +148,7 @@ class _ScanCodeViewState extends State<ScanCodeView> {
 
           setState(() {
             qrColor = Colors.green;
-            name =
+            attendeeName =
                 "${person.data()!['firstName']} ${person.data()!['lastName']}";
           });
         }
@@ -159,19 +159,21 @@ class _ScanCodeViewState extends State<ScanCodeView> {
       color: qrColor,
       child: SingleChildScrollView(
         child: Center(
-          child: name != ""
+          child: attendeeName != ""
               ? Text(
-                  "Bienvenue : $name !",
+                  "Bienvenue : $attendeeName !",
                   style: const TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
                   ),
                 )
-              : const Text(
-                  "Scan a QR code",
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
+              : const Center(
+                  child: Text(
+                    "Vérifiez votre code !",
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
         ),

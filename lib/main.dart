@@ -32,7 +32,7 @@ class EventCheckin extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'ICC Lyon Check-in',
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
