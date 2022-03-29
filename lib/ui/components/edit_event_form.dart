@@ -27,6 +27,8 @@ class _EditEventFormState extends State<EditEventForm> {
   final TextEditingController _locationController = TextEditingController();
   final TextEditingController _nbAttendeesController = TextEditingController();
 
+  String _eventType = 'Culte';
+
   @override
   void initState() {
     if (widget.initialValues.isNotEmpty) {
@@ -40,6 +42,7 @@ class _EditEventFormState extends State<EditEventForm> {
       _locationController.text = widget.initialValues['location'];
       _nbAttendeesController.text = widget.initialValues['nbAttendees'];
     }
+
     super.initState();
   }
 
@@ -99,18 +102,32 @@ class _EditEventFormState extends State<EditEventForm> {
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: TextFormField(
-            controller: _typeController,
+          child: DropdownButtonFormField(
+            value: _eventType,
             decoration: const InputDecoration(
-              labelText: 'Type',
+              labelText: 'Type d\'événement',
               border: OutlineInputBorder(),
-              prefixIcon: Icon(Icons.event_note),
+              prefixIcon: Icon(Icons.event_available),
             ),
-            validator: (String? value) {
-              if (value!.isEmpty) {
-                return 'Veuillez entrer un type d\'événement';
-              }
-              return null;
+            items: <String>[
+              'Culte',
+              'Atmosphère De Gloire',
+              'Mariage',
+              'Conférence',
+              'Séminaire',
+              'Atelier',
+              'Réunion',
+              'Autre',
+            ].map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+            onChanged: (String? value) {
+              setState(() {
+                _eventType = value!;
+              });
             },
           ),
         ),
@@ -157,6 +174,7 @@ class _EditEventFormState extends State<EditEventForm> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextFormField(
+            keyboardType: TextInputType.number,
             controller: _nbAttendeesController,
             decoration: const InputDecoration(
               labelText: 'Nombre de participants',
