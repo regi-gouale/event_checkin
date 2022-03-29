@@ -127,6 +127,7 @@ class _EditEventFormState extends State<EditEventForm> {
             onChanged: (String? value) {
               setState(() {
                 _eventType = value!;
+                _typeController.text = value;
               });
             },
           ),

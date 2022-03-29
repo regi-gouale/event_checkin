@@ -183,7 +183,8 @@ class _AddPersonScreenState extends State<AddPersonScreen> {
             'email': _emailController.text,
             'phone': _phoneController.text,
             'address': _addressController.text,
-            'birthday': _birthdayController.text,
+            'birthday': CalendarPicker.stringToDate(_birthdayController.text),
+            'gender': _genderController.text,
           };
           await FirebaseFirestore.instance.collection('members').add(data);
 
