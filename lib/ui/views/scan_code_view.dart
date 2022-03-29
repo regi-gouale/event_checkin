@@ -138,18 +138,18 @@ class _ScanCodeViewState extends State<ScanCodeView> {
               .collection("attendees")
               .doc(person.id)
               .set({
-            "firstName": person.data()!["firstName"],
-            "lastName": person.data()!["lastName"],
+            "firstname": person.data()!["firstname"],
+            "lastname": person.data()!["lastname"],
             "email": person.data()!["email"],
             "phone": person.data()!["phone"],
-            "birthYear": person.data()!["birthYear"],
+            "birthday": person.data()!["birthday"],
             "gender": person.data()!["gender"],
           });
 
           setState(() {
             qrColor = Colors.green;
             attendeeName =
-                "${person.data()!['firstName']} ${person.data()!['lastName']}";
+                "${person.data()!['firstname']} ${person.data()!['lastname']}";
           });
         }
       });

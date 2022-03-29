@@ -82,7 +82,7 @@ class _EventAttendeesViewState extends State<EventAttendeesView> {
                     return Card(
                       child: ListTile(
                         title: Text(
-                          "${attendee['firstName']} ${attendee['lastName']}".toUpperCase()),
+                          "${attendee['firstname']} ${attendee['lastname']}".toUpperCase()),
                         subtitle: Text(
                          attendee['email'].toString().toLowerCase(),
                         ),
