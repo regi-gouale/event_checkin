@@ -6,10 +6,14 @@ class CalendarPicker extends StatefulWidget {
     Key? key,
     required this.controller,
     this.dateLabel = 'Heure de début',
+    this.startDateCount = 1,
+    this.endDateCount = 1,
   }) : super(key: key);
 
   final TextEditingController controller;
   final String dateLabel;
+  final int startDateCount;
+  final int endDateCount;
   static String timeFormat = "EEEE, d MMMM, yyyy 'at' h:mm";
 
   static DateTime? stringToDate(String dateString) {
@@ -38,8 +42,8 @@ class _CalendarPickerState extends State<CalendarPicker> {
     final DateTime? date = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(DateTime.now().year - 1),
-      lastDate: DateTime(DateTime.now().year + 1),
+      firstDate: DateTime(DateTime.now().year - widget.startDateCount),
+      lastDate: DateTime(DateTime.now().year + widget.endDateCount),
     );
     if (date != null) {
       final TimeOfDay? time = await showTimePicker(
@@ -57,7 +61,7 @@ class _CalendarPickerState extends State<CalendarPicker> {
     }
   }
 
-  bool datValidator(String date) {
+  bool dateValidator(String date) {
     return CalendarPicker.stringToDate(date) != null;
   }
 
@@ -78,7 +82,7 @@ class _CalendarPickerState extends State<CalendarPicker> {
             ),
             keyboardType: TextInputType.datetime,
             validator: (value) =>
-                datValidator(value!) ? null : 'Veuillez entrer une date valide',
+                dateValidator(value!) ? null : 'Veuillez entrer une date valide',
           ),
         ),
         IconButton(
