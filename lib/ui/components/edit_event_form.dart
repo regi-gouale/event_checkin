@@ -94,7 +94,7 @@ class _EditEventFormState extends State<EditEventForm> {
             ),
             validator: (String? value) {
               if (value!.isEmpty) {
-                return 'Veuillez entrer un nom';
+                return 'Veuillez entrer le nom de l\'événement';
               }
               return null;
             },

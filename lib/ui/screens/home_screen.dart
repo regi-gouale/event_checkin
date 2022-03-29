@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_checkin/ui/screens/add_event_screen.dart';
+import 'package:event_checkin/ui/screens/add_person_screen.dart';
 import 'package:event_checkin/ui/screens/event_screen.dart';
 import 'package:event_checkin/ui/screens/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -30,6 +31,16 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       appBar: AppBar(
         title: const Text('ICC Lyon Event Check-In'),
+        leading: IconButton(
+          icon: const Icon(Icons.person_add),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const AddPersonScreen(),
+              ),
+            );
+          },
+        ),
         actions: [
           IconButton(
             onPressed: () async {

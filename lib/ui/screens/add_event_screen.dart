@@ -12,7 +12,7 @@ class AddEventScreen extends StatefulWidget {
 class _AddEventScreenState extends State<AddEventScreen> {
   Future<void> submitForm(Map<String, dynamic> data) async {
     await FirebaseFirestore.instance.collection('events').add(data);
-    
+
     Navigator.of(context).pop();
   }
 
