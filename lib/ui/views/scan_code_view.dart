@@ -127,7 +127,7 @@ class _ScanCodeViewState extends State<ScanCodeView> {
     if (barcode.format == BarcodeFormat.qrcode &&
         (barcode.code != "" || barcode.code != null)) {
       FirebaseFirestore.instance
-          .collection("persons")
+          .collection("members")
           .doc(barcode.code)
           .get()
           .then((person) {
