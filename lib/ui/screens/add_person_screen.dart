@@ -178,11 +178,11 @@ class _AddPersonScreenState extends State<AddPersonScreen> {
       onPressed: () async {
         if (_formKey.currentState!.validate()) {
           final Map<String, dynamic> data = {
-            'firstname': _firstnameController.text,
-            'lastname': _lastnameController.text,
-            'email': _emailController.text,
-            'phone': _phoneController.text,
-            'address': _addressController.text,
+            'firstname': _firstnameController.text.trim(),
+            'lastname': _lastnameController.text.trim().toUpperCase(),
+            'email': _emailController.text.trim().toLowerCase(),
+            'phone': _phoneController.text.trim(),
+            'address': _addressController.text.trim(),
             'birthday': CalendarPicker.stringToDate(_birthdayController.text),
             'gender': _genderController.text,
           };

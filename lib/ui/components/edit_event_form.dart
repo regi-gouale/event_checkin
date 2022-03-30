@@ -53,12 +53,12 @@ class _EditEventFormState extends State<EditEventForm> {
       _formKey.currentState!.save();
 
       final Map<String, dynamic> data = {
-        'name': _nameController.text,
-        'type': _typeController.text,
-        'description': _descriptionController.text,
+        'name': _nameController.text.trim(),
+        'type': _typeController.text.trim(),
+        'description': _descriptionController.text.trim(),
         'startTime': CalendarPicker.stringToDate(_startTimeController.text),
         'endTime': CalendarPicker.stringToDate(_endTimeController.text),
-        'location': _locationController.text,
+        'location': _locationController.text.trim(),
         'nbAttendees': int.parse(_nbAttendeesController.text),
       };
       widget.onSubmitFormCallback(data);
