@@ -5,6 +5,7 @@ import 'package:event_checkin/ui/screens/event_screen.dart';
 import 'package:event_checkin/ui/screens/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -107,10 +108,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: ListTile(
-                      title: Text(document.get('name')),
+                      title: Text(
+                        document.get('name'),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       subtitle: Text(document.get('type')),
-                      trailing:
-                          Text(document.get('startTime').toDate().toString()),
+                      trailing: Text(
+                        DateFormat('dd-MM-yyyy HH:mm').format(
+                          document.get('startTime').toDate(),
+                        ),
+                      ),
+                      selectedTileColor: Colors.redAccent,
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
