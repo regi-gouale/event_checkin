@@ -1,6 +1,6 @@
-# event_checkin
+# ICC Lyon Event Check-in
 
-A new Flutter project.
+ICC Lyon application for checkin in local events.
 
 ## Getting Started
 

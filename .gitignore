@@ -49,3 +49,4 @@ lib/firebase_options.dart
 lib/generated_plugin_registrant.dart
 .firebaserc
 ios/Runner/Info.plist
+web/scripts/app.js
