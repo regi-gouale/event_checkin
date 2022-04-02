@@ -34,12 +34,14 @@ class _EditEventFormState extends State<EditEventForm> {
     if (widget.initialValues.isNotEmpty) {
       _nameController.text = widget.initialValues['name'];
       _typeController.text = widget.initialValues['type'];
-      _descriptionController.text = widget.initialValues['description'];
+      _descriptionController.text =
+          widget.initialValues['description'];
       _startTimeController.text = DateFormat(CalendarPicker.timeFormat)
           .format(widget.initialValues['startTime']);
       _endTimeController.text = DateFormat(CalendarPicker.timeFormat)
           .format(widget.initialValues['endTime']);
-      _locationController.text = widget.initialValues['location'];
+      _locationController.text =
+          widget.initialValues['location'];
       _nbAttendeesController.text = widget.initialValues['nbAttendees'];
     }
 
@@ -53,12 +55,12 @@ class _EditEventFormState extends State<EditEventForm> {
       _formKey.currentState!.save();
 
       final Map<String, dynamic> data = {
-        'name': _nameController.text.trim(),
-        'type': _typeController.text.trim(),
-        'description': _descriptionController.text.trim(),
+        'name': _nameController.text.toString().trim(),
+        'type': _typeController.text.toString().trim(),
+        'description': _descriptionController.text.toString().trim(),
         'startTime': CalendarPicker.stringToDate(_startTimeController.text),
         'endTime': CalendarPicker.stringToDate(_endTimeController.text),
-        'location': _locationController.text.trim(),
+        'location': _locationController.text.toString().trim(),
         'nbAttendees': int.parse(_nbAttendeesController.text),
       };
       widget.onSubmitFormCallback(data);
@@ -118,12 +120,14 @@ class _EditEventFormState extends State<EditEventForm> {
               'Atelier',
               'Réunion',
               'Autre',
-            ].map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
+            ].map<DropdownMenuItem<String>>(
+              (String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              },
+            ).toList(),
             onChanged: (String? value) {
               setState(() {
                 _eventType = value!;
